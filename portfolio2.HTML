@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jay — Creative Designer & Digital Freelancer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0a;
+  --surface: #111111;
+  --border: rgba(255,255,255,0.07);
+  --amber: #f59e0b;
+  --amber2: #fbbf24;
+  --text: #f0ede8;
+  --muted: #6b6b6b;
+  --white: #ffffff;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  font-family:'Instrument Sans',sans-serif;
+  color:var(--text);
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* ─── CURSOR ─── */
+.cursor{
+  width:10px;height:10px;border-radius:50%;
+  background:var(--amber);
+  position:fixed;top:0;left:0;
+  pointer-events:none;z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:transform 0.1s;
+  mix-blend-mode:difference;
+}
+.cursor-ring{
+  width:36px;height:36px;border-radius:50%;
+  border:1px solid rgba(245,158,11,0.4);
+  position:fixed;top:0;left:0;
+  pointer-events:none;z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:all 0.15s ease;
+}
+
+/* ─── NOISE TEXTURE ─── */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:0.4;
+}
+
+/* ─── NAV ─── */
+nav{
+  position:fixed;top:0;left:0;right:0;
+  padding:24px 48px;
+  display:flex;justify-content:space-between;align-items:center;
+  z-index:100;
+  background:rgba(10,10,10,0.8);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{
+  font-family:'Syne',sans-serif;
+  font-size:18px;font-weight:800;
+  letter-spacing:0.02em;
+  color:var(--white);
+}
+.nav-logo span{color:var(--amber);}
+.nav-links{display:flex;gap:32px;list-style:none;}
+.nav-links a{
+  font-size:13px;color:var(--muted);
+  text-decoration:none;letter-spacing:0.06em;
+  text-transform:uppercase;font-weight:500;
+  transition:color 0.2s;
+}
+.nav-links a:hover{color:var(--amber);}
+.nav-cta{
+  padding:9px 22px;
+  border:1px solid var(--amber);
+  border-radius:4px;
+  font-size:12px;font-weight:600;
+  color:var(--amber);letter-spacing:0.08em;
+  text-decoration:none;text-transform:uppercase;
+  transition:all 0.2s;
+}
+.nav-cta:hover{background:var(--amber);color:#0a0a0a;}
+
+/* ─── HERO ─── */
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  justify-content:center;
+  padding:120px 48px 80px;
+  position:relative;overflow:hidden;
+}
+.hero-glow{
+  position:absolute;top:-200px;right:-100px;
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(245,158,11,0.06) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-glow2{
+  position:absolute;bottom:-200px;left:-100px;
+  width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle,rgba(245,158,11,0.04) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(245,158,11,0.08);
+  border:1px solid rgba(245,158,11,0.2);
+  border-radius:20px;padding:6px 16px;
+  font-size:11px;letter-spacing:0.1em;
+  color:var(--amber);text-transform:uppercase;font-weight:600;
+  margin-bottom:32px;width:fit-content;
+  animation:fadeUp 0.8s ease both;
+}
+.hero-tag::before{content:'●';font-size:8px;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+.hero-h1{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(48px,7vw,96px);
+  font-weight:800;line-height:0.95;
+  letter-spacing:-0.02em;
+  margin-bottom:32px;
+  animation:fadeUp 0.8s 0.1s ease both;
+}
+.hero-h1 .line2{
+  color:transparent;
+  -webkit-text-stroke:1px rgba(255,255,255,0.3);
+}
+.hero-h1 .highlight{
+  background:linear-gradient(90deg,var(--amber),var(--amber2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero-sub{
+  font-size:17px;color:var(--muted);
+  max-width:480px;line-height:1.7;
+  margin-bottom:48px;
+  animation:fadeUp 0.8s 0.2s ease both;
+}
+.hero-actions{
+  display:flex;gap:16px;flex-wrap:wrap;
+  animation:fadeUp 0.8s 0.3s ease both;
+}
+.btn-main{
+  padding:14px 32px;
+  background:var(--amber);
+  border:none;border-radius:4px;
+  font-family:'Instrument Sans',sans-serif;
+  font-size:13px;font-weight:700;
+  color:#0a0a0a;letter-spacing:0.06em;
+  text-transform:uppercase;
+  cursor:pointer;text-decoration:none;
+  display:inline-block;
+  transition:all 0.2s;
+}
+.btn-main:hover{background:var(--amber2);transform:translateY(-2px);}
+.btn-ghost{
+  padding:14px 32px;
+  background:transparent;
+  border:1px solid var(--border);
+  border-radius:4px;
+  font-size:13px;font-weight:600;
+  color:var(--muted);letter-spacing:0.06em;
+  text-transform:uppercase;
+  cursor:pointer;text-decoration:none;
+  display:inline-block;
+  transition:all 0.2s;
+}
+.btn-ghost:hover{border-color:var(--amber);color:var(--amber);}
+.hero-stats{
+  display:flex;gap:48px;margin-top:80px;
+  padding-top:48px;border-top:1px solid var(--border);
+  animation:fadeUp 0.8s 0.4s ease both;
+}
+.stat-num{
+  font-family:'Syne',sans-serif;
+  font-size:36px;font-weight:800;color:var(--white);
+}
+.stat-num span{color:var(--amber);}
+.stat-lbl{font-size:12px;color:var(--muted);letter-spacing:0.06em;margin-top:4px;text-transform:uppercase;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+
+/* ─── MARQUEE ─── */
+.marquee-wrap{
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  padding:18px 0;overflow:hidden;
+  background:rgba(245,158,11,0.02);
+}
+.marquee-track{
+  display:flex;gap:0;
+  animation:marquee 20s linear infinite;
+  width:max-content;
+}
+.marquee-item{
+  font-family:'Syne',sans-serif;
+  font-size:13px;font-weight:700;
+  letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--muted);padding:0 32px;
+  display:flex;align-items:center;gap:32px;
+}
+.marquee-item::after{content:'✦';color:var(--amber);font-size:10px;}
+@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* ─── SERVICES ─── */
+.section{padding:100px 48px;}
+.section-label{
+  font-size:11px;color:var(--amber);
+  letter-spacing:0.14em;text-transform:uppercase;
+  font-weight:700;margin-bottom:16px;
+  display:flex;align-items:center;gap:10px;
+}
+.section-label::before{content:'';width:24px;height:1px;background:var(--amber);}
+.section-h2{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(32px,4vw,52px);
+  font-weight:800;letter-spacing:-0.02em;
+  line-height:1.1;margin-bottom:60px;
+}
+.services-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1px;background:var(--border);
+  border:1px solid var(--border);
+  border-radius:12px;overflow:hidden;
+}
+.service-card{
+  background:var(--bg);padding:36px 32px;
+  transition:background 0.3s;
+  position:relative;overflow:hidden;
+}
+.service-card:hover{background:var(--surface);}
+.service-card::after{
+  content:'';
+  position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--amber),transparent);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform 0.3s;
+}
+.service-card:hover::after{transform:scaleX(1);}
+.service-icon{font-size:32px;margin-bottom:20px;}
+.service-title{
+  font-family:'Syne',sans-serif;
+  font-size:18px;font-weight:700;margin-bottom:10px;
+}
+.service-desc{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:20px;}
+.service-price{
+  font-size:13px;font-weight:700;
+  color:var(--amber);letter-spacing:0.04em;
+}
+
+/* ─── PORTFOLIO ─── */
+.portfolio-section{padding:100px 48px;background:var(--surface);}
+.portfolio-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:20px;
+}
+.portfolio-card{
+  border-radius:12px;overflow:hidden;
+  border:1px solid var(--border);
+  background:var(--bg);
+  transition:transform 0.3s,box-shadow 0.3s;
+  cursor:pointer;
+}
+.portfolio-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 20px 60px rgba(0,0,0,0.5);
+}
+.portfolio-thumb{
+  height:200px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:60px;position:relative;overflow:hidden;
+}
+.portfolio-thumb::after{
+  content:'VIEW PROJECT →';
+  position:absolute;inset:0;
+  background:rgba(0,0,0,0.7);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;
+  font-size:13px;font-weight:700;
+  letter-spacing:0.1em;color:var(--amber);
+  opacity:0;transition:opacity 0.3s;
+}
+.portfolio-card:hover .portfolio-thumb::after{opacity:1;}
+.portfolio-info{padding:20px 24px 24px;}
+.portfolio-tag{
+  font-size:10px;color:var(--amber);
+  letter-spacing:0.1em;text-transform:uppercase;font-weight:700;
+  margin-bottom:8px;
+}
+.portfolio-title{
+  font-family:'Syne',sans-serif;
+  font-size:17px;font-weight:700;margin-bottom:6px;
+}
+.portfolio-desc{font-size:13px;color:var(--muted);line-height:1.6;}
+
+/* ─── PROCESS ─── */
+.process-section{padding:100px 48px;}
+.process-steps{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:0;position:relative;margin-top:60px;
+}
+.process-steps::before{
+  content:'';position:absolute;top:28px;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--border),var(--border),transparent);
+}
+.process-step{padding:0 32px 0 0;position:relative;}
+.step-num{
+  width:56px;height:56px;border-radius:50%;
+  background:var(--bg);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-size:14px;font-weight:800;
+  color:var(--amber);margin-bottom:20px;
+  position:relative;z-index:1;
+}
+.step-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:8px;}
+.step-desc{font-size:13px;color:var(--muted);line-height:1.6;}
+
+/* ─── TESTIMONIALS ─── */
+.testimonials{padding:100px 48px;background:var(--surface);}
+.testimonials-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:20px;margin-top:60px;
+}
+.testimonial-card{
+  background:var(--bg);border:1px solid var(--border);
+  border-radius:12px;padding:32px;
+  position:relative;
+}
+.testimonial-card::before{
+  content:'"';
+  font-family:'Syne',sans-serif;font-size:80px;
+  color:rgba(245,158,11,0.1);
+  position:absolute;top:16px;right:24px;
+  line-height:1;font-weight:800;
+}
+.testimonial-text{
+  font-size:15px;line-height:1.7;color:var(--text);
+  margin-bottom:24px;font-style:italic;
+}
+.testimonial-author{display:flex;align-items:center;gap:12px;}
+.author-avatar{
+  width:40px;height:40px;border-radius:50%;
+  background:linear-gradient(135deg,var(--amber),#ff6b35);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:14px;color:#0a0a0a;
+}
+.author-name{font-size:13px;font-weight:700;}
+.author-role{font-size:11px;color:var(--muted);}
+.stars{color:var(--amber);font-size:12px;margin-bottom:16px;letter-spacing:2px;}
+
+/* ─── CTA ─── */
+.cta-section{
+  padding:120px 48px;
+  text-align:center;
+  position:relative;overflow:hidden;
+}
+.cta-glow{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:600px;height:400px;
+  background:radial-gradient(ellipse,rgba(245,158,11,0.06),transparent 70%);
+  pointer-events:none;
+}
+.cta-h2{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(36px,5vw,72px);
+  font-weight:800;letter-spacing:-0.02em;
+  line-height:1.1;margin-bottom:24px;
+}
+.cta-sub{font-size:17px;color:var(--muted);margin-bottom:48px;max-width:500px;margin-left:auto;margin-right:auto;}
+.cta-contact{
+  display:flex;gap:12px;justify-content:center;
+  flex-wrap:wrap;margin-bottom:40px;
+}
+.contact-pill{
+  display:flex;align-items:center;gap:8px;
+  padding:12px 24px;
+  border:1px solid var(--border);border-radius:40px;
+  font-size:13px;color:var(--muted);
+  text-decoration:none;transition:all 0.2s;
+}
+.contact-pill:hover{border-color:var(--amber);color:var(--amber);}
+.contact-pill span{font-size:16px;}
+
+/* ─── FOOTER ─── */
+footer{
+  padding:32px 48px;
+  border-top:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:16px;
+}
+.footer-logo{
+  font-family:'Syne',sans-serif;
+  font-size:16px;font-weight:800;
+}
+.footer-logo span{color:var(--amber);}
+.footer-copy{font-size:12px;color:var(--muted);}
+.footer-links{display:flex;gap:24px;}
+.footer-links a{font-size:12px;color:var(--muted);text-decoration:none;transition:color 0.2s;}
+.footer-links a:hover{color:var(--amber);}
+
+/* ─── SCROLL REVEAL ─── */
+.reveal{opacity:0;transform:translateY(30px);transition:all 0.7s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Jay<span>.</span></div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Hire Me</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-tag">● Available for Work · Bengaluru, India</div>
+  <h1 class="hero-h1">
+    Creative<br>
+    <span class="line2">Designer &</span><br>
+    <span class="highlight">Strategist</span>
+  </h1>
+  <p class="hero-sub">UI/UX wireframes, content writing, pitch decks, and digital solutions — crafted with sharp creative thinking and modern tools. Premium quality, startup prices.</p>
+  <div class="hero-actions">
+    <a href="#work" class="btn-main">See My Work</a>
+    <a href="#contact" class="btn-ghost">Let's Talk →</a>
+  </div>
+  <div class="hero-stats">
+    <div>
+      <div class="stat-num">48<span>h</span></div>
+      <div class="stat-lbl">Avg. Delivery</div>
+    </div>
+    <div>
+      <div class="stat-num">100<span>%</span></div>
+      <div class="stat-lbl">Satisfaction</div>
+    </div>
+    <div>
+      <div class="stat-num">5<span>★</span></div>
+      <div class="stat-lbl">Rated Service</div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <div class="marquee-item">UI/UX Design</div>
+    <div class="marquee-item">Wireframes</div>
+    <div class="marquee-item">Content Writing</div>
+    <div class="marquee-item">Pitch Decks</div>
+    <div class="marquee-item">Smart Workflows</div>
+    <div class="marquee-item">Social Media</div>
+    <div class="marquee-item">Web Design</div>
+    <div class="marquee-item">Branding</div>
+    <div class="marquee-item">UI/UX Design</div>
+    <div class="marquee-item">Wireframes</div>
+    <div class="marquee-item">Content Writing</div>
+    <div class="marquee-item">Pitch Decks</div>
+    <div class="marquee-item">Smart Workflows</div>
+    <div class="marquee-item">Social Media</div>
+    <div class="marquee-item">Web Design</div>
+    <div class="marquee-item">Branding</div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="section" id="services">
+  <div class="section-label">What I Offer</div>
+  <h2 class="section-h2">Services Built<br>for Modern Business</h2>
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:40px;margin-top:-32px;">
+    <div style="display:inline-flex;align-items:center;gap:7px;padding:5px 14px;background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.15);border-radius:20px;">
+      <span style="font-size:13px;">⚡</span>
+      <span style="font-size:11px;color:#f59e0b;letter-spacing:0.08em;font-weight:600;">AI-Assisted Workflow — Faster Turnarounds, Sharper Results</span>
+    </div>
+  </div>
+  <div class="services-grid reveal">
+    <div class="service-card">
+      <div class="service-icon">📱</div>
+      <div class="service-title">UI/UX Wireframes</div>
+      <div class="service-desc">Complete mobile & web app wireframes with interactive click-through flows. From splash to checkout — fully designed and annotated.</div>
+      <div class="service-price">From ₹2,000 · 48hr delivery</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">✍️</div>
+      <div class="service-title">Content Writing</div>
+      <div class="service-desc">SEO-optimised blogs, website copy, product descriptions, and social posts that convert visitors into customers.</div>
+      <div class="service-price">From ₹500 · 24hr delivery</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📊</div>
+      <div class="service-title">Pitch Decks</div>
+      <div class="service-desc">Investor-ready pitch decks and business presentations that tell your story, show your numbers, and win the room.</div>
+      <div class="service-price">From ₹3,000 · 72hr delivery</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📣</div>
+      <div class="service-title">Social Media Packages</div>
+      <div class="service-desc">Monthly Instagram, LinkedIn & Twitter content — captions, hooks, hashtags, and scheduling strategy included.</div>
+      <div class="service-price">From ₹5,000/month</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📧</div>
+      <div class="service-title">Email Marketing</div>
+      <div class="service-desc">Welcome sequences, newsletters, and promotional campaigns that drive opens, clicks, and revenue for your business.</div>
+      <div class="service-price">From ₹3,000 · per campaign</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🌐</div>
+      <div class="service-title">Digital Strategy</div>
+      <div class="service-desc">Content systems, brand positioning, and workflow planning to help your business grow online — smarter and faster.</div>
+      <div class="service-price">From ₹5,000 · custom scope</div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section class="portfolio-section" id="work">
+  <div class="section-label">Selected Work</div>
+  <h2 class="section-h2">Recent Projects</h2>
+  <div class="portfolio-grid reveal">
+    <div class="portfolio-card">
+      <div class="portfolio-thumb" style="background:linear-gradient(135deg,#050810,#0d2040);">
+        📱
+      </div>
+      <div class="portfolio-info">
+        <div class="portfolio-tag">UI/UX · Mobile App</div>
+        <div class="portfolio-title">CryptoX — Trading App Wireframe</div>
+        <div class="portfolio-desc">6-screen interactive wireframe for a crypto trading app — splash, onboarding, dashboard, asset detail, trade & wallet flows.</div>
+      </div>
+    </div>
+    <div class="portfolio-card">
+      <div class="portfolio-thumb" style="background:linear-gradient(135deg,#0a1a0a,#0d3020);">
+        📝
+      </div>
+      <div class="portfolio-info">
+        <div class="portfolio-tag">Content Writing · Blog</div>
+        <div class="portfolio-title">Tech Startup Blog — 10 Articles</div>
+        <div class="portfolio-desc">SEO-optimised content series on AI trends, driving 3x organic traffic growth within 60 days of publishing.</div>
+      </div>
+    </div>
+    <div class="portfolio-card">
+      <div class="portfolio-thumb" style="background:linear-gradient(135deg,#1a0a00,#2d1800);">
+        📊
+      </div>
+      <div class="portfolio-info">
+        <div class="portfolio-tag">Pitch Deck · Startup</div>
+        <div class="portfolio-title">SaaS Startup — Investor Deck</div>
+        <div class="portfolio-desc">12-slide investor pitch deck for a B2B SaaS company, used to raise their seed funding round successfully.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process-section" id="process">
+  <div class="section-label">How It Works</div>
+  <h2 class="section-h2">From Order to<br>Delivery in 4 Steps</h2>
+  <div class="process-steps reveal">
+    <div class="process-step">
+      <div class="step-num">01</div>
+      <div class="step-title">You Brief Me</div>
+      <div class="step-desc">Tell me your project — what you need, who it's for, and your deadline. Takes 5 minutes.</div>
+    </div>
+    <div class="process-step">
+      <div class="step-num">02</div>
+      <div class="step-title">I Research</div>
+      <div class="step-desc">I dive deep into your niche, competitors, and audience to create something that actually works.</div>
+    </div>
+    <div class="process-step">
+      <div class="step-num">03</div>
+      <div class="step-title">I Deliver</div>
+      <div class="step-desc">You receive polished, professional work within the agreed timeline. No delays, no excuses.</div>
+    </div>
+    <div class="process-step">
+      <div class="step-num">04</div>
+      <div class="step-title">We Revise</div>
+      <div class="step-desc">2 free revision rounds included. Your satisfaction is guaranteed before I close the project.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="section-label">Client Love</div>
+  <h2 class="section-h2">What Clients Say</h2>
+  <div class="testimonials-grid reveal">
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <div class="testimonial-text">"Delivered an incredible wireframe for our fintech app in just 2 days. Exactly what we envisioned — and then some. Will definitely hire again!"</div>
+      <div class="testimonial-author">
+        <div class="author-avatar">R</div>
+        <div>
+          <div class="author-name">Rahul Sharma</div>
+          <div class="author-role">Founder, FinPay Startup</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <div class="testimonial-text">"Our blog traffic tripled after the content package. Professional, fast, and always understood our brand voice perfectly."</div>
+      <div class="testimonial-author">
+        <div class="author-avatar">P</div>
+        <div>
+          <div class="author-name">Priya Menon</div>
+          <div class="author-role">Marketing Head, TechBridge</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <div class="testimonial-text">"The pitch deck was a game-changer. Investors loved the clarity and design. We closed our seed round within 3 weeks of using it."</div>
+      <div class="testimonial-author">
+        <div class="author-avatar">K</div>
+        <div>
+          <div class="author-name">Kiran Patel</div>
+          <div class="author-role">CEO, GrowthLab</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <div class="cta-glow"></div>
+  <div class="section-label" style="justify-content:center;">Let's Work Together</div>
+  <h2 class="cta-h2">Ready to Start<br>Your Project?</h2>
+  <p class="cta-sub">Drop me a message and I'll get back to you within 2 hours. Fast delivery, professional quality, fair prices.</p>
+  <a href="#contact" class="btn-main" style="display:inline-block;margin-bottom:40px;font-size:14px;padding:16px 40px;">GET IN TOUCH →</a>
+  <div class="cta-contact">
+    <a href="mailto:your@email.com" class="contact-pill">
+      <span>✉️</span> your@email.com
+    </a>
+    <a href="https://wa.me/919999999999" class="contact-pill">
+      <span>💬</span> WhatsApp Me
+    </a>
+    <a href="https://fiverr.com/yourprofile" class="contact-pill">
+      <span>🟢</span> Fiverr Profile
+    </a>
+    <a href="https://linkedin.com/in/yourprofile" class="contact-pill">
+      <span>🔗</span> LinkedIn
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Jay<span>.</span></div>
+  <div class="footer-copy">© 2026 · Creative Designer · Bengaluru, India</div>
+  <div class="footer-links">
+    <a href="#services">Services</a>
+    <a href="#work">Work</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+<script>
+// Cursor
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cursor.style.left=mx+'px';cursor.style.top=my+'px';
+});
+function animRing(){
+  rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;
+  ring.style.left=rx+'px';ring.style.top=ry+'px';
+  requestAnimationFrame(animRing);
+}
+animRing();
+
+// Hover effects
+document.querySelectorAll('a,button,.service-card,.portfolio-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ring.style.transform='translate(-50%,-50%) scale(1.8)';ring.style.borderColor='rgba(245,158,11,0.6)';});
+  el.addEventListener('mouseleave',()=>{ring.style.transform='translate(-50%,-50%) scale(1)';ring.style.borderColor='rgba(245,158,11,0.4)';});
+});
+
+// Scroll reveal
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+// Nav active state
+window.addEventListener('scroll',()=>{
+  document.querySelector('nav').style.background=window.scrollY>50?'rgba(10,10,10,0.95)':'rgba(10,10,10,0.8)';
+});
+</script>
+</body>
+</html>
